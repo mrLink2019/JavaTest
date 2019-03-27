@@ -1,6 +1,8 @@
 package main_package;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
@@ -11,6 +13,8 @@ public class Controller {
 		String folderPath = folderLocation.concat(folderName);
 		String filePath = folderPath.concat(slash);
 		String line;	
+		String notes;
+		String [] linesAsArray;
 	
 	    public void createFolder() {    	
 	    	File folder = new File(folderPath);
@@ -40,9 +44,33 @@ public class Controller {
 			FileReader fileReader = new FileReader(newFile); // поток который подключается к текстовому файлу
 			BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
 			
-			while((line = bufferedReader.readLine()) != null) {
-				System.out.println(line); 
-			}
+	        List<String> lines = new ArrayList<String>();
+	        while ((line = bufferedReader.readLine()) != null) {
+	            lines.add(line);
+	        }
+	        linesAsArray = lines.toArray(new String[lines.size()]);
 			bufferedReader.close(); 
+	    }
+	    
+	    public void copyFile(newFile copiedFile, newFile fileForCopy) throws Exception {
+	    	File copiedObject = new File(filePath +copiedFile.name.concat(".txt"));
+	    	File objectForCopy = new File(filePath +fileForCopy.name.concat(".txt"));
+	    	FileReader fileReader = new FileReader(copiedObject);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			FileWriter fileWriter = new FileWriter(objectForCopy);
+			
+	        List<String> lines = new ArrayList<String>();
+	        while ((line = bufferedReader.readLine()) != null) {
+	            lines.add(line);
+	        }
+	        linesAsArray = lines.toArray(new String[lines.size()]);
+	        
+	        for(int i = 0;i<linesAsArray.length;i++) {
+	        	line = linesAsArray[i];
+	        	fileWriter.write(line);
+	        }
+			bufferedReader.close(); 
+			fileWriter.flush();
+			fileWriter.close();    	
 	    }
 }
