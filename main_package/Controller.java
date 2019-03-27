@@ -22,24 +22,31 @@ public class Controller {
 	    }
 	    
 	    public void createNewFile(newFile file) throws Exception {
+	    	if(new File(folderPath).isDirectory()) {
 	    	File newFile = new File(filePath +file.name.concat(".txt"));
 	    	newFile.createNewFile();
+	    	}
 	    }
 	    
 	    public void editFile(newFile file) throws Exception {
+	    	if(new File(folderPath).isDirectory() & new File(filePath +file.name.concat(".txt")).isFile()) {
 	    	File newFile = new File(filePath +file.name.concat(".txt"));
 			FileWriter fileWriter = new FileWriter(newFile);
 			fileWriter.write(file.context);
 			fileWriter.flush();
 			fileWriter.close();
+	    	}
 	    }
 	    
 	    public void deleteFile(newFile file) {
+	    	if(new File(folderPath).isDirectory() & new File(filePath +file.name.concat(".txt")).isFile()) {
 	    	File newFile = new File(filePath +file.name.concat(".txt"));
-	    	newFile.delete();	    	
+	    	newFile.delete();	
+	    	}
 	    }
 	    
 	    public void readFile(newFile file) throws Exception {
+	    	if(new File(folderPath).isDirectory() & new File(filePath +file.name.concat(".txt")).isFile()) {
 	    	File newFile = new File(filePath +file.name.concat(".txt"));
 			FileReader fileReader = new FileReader(newFile); // поток который подключается к текстовому файлу
 			BufferedReader bufferedReader = new BufferedReader(fileReader); // соединяем FileReader с BufferedReader
@@ -50,9 +57,12 @@ public class Controller {
 	        }
 	        linesAsArray = lines.toArray(new String[lines.size()]);
 			bufferedReader.close(); 
+	    	}
 	    }
 	    
 	    public void copyFile(newFile copiedFile, newFile fileForCopy) throws Exception {
+	    	if(new File(folderPath).isDirectory() & new File(filePath +copiedFile.name.concat(".txt")).isFile()
+	    			& new File(filePath +fileForCopy.name.concat(".txt")).isFile()) {
 	    	File copiedObject = new File(filePath +copiedFile.name.concat(".txt"));
 	    	File objectForCopy = new File(filePath +fileForCopy.name.concat(".txt"));
 	    	FileReader fileReader = new FileReader(copiedObject);
@@ -71,6 +81,7 @@ public class Controller {
 	        }
 			bufferedReader.close(); 
 			fileWriter.flush();
-			fileWriter.close();    	
+			fileWriter.close();
+	    	}
 	    }
 }
